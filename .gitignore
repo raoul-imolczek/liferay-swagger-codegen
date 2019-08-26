@@ -1,8 +1,10 @@
+liferay-swagger-codegen.*/bin/
 liferay-swagger-codegen.*/.classpath
 liferay-swagger-codegen.*/.settings/
 liferay-swagger-codegen.*/.project
 liferay-swagger-codegen.*/target
 
+bin/
 .classpath
 .settings/
 .project
