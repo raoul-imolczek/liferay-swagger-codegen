@@ -2,4 +2,6 @@ Export-Package:\
 	com.imolczek.liferay.lab.petstore.model,\
 	com.imolczek.liferay.lab.petstore.model.Order,\
 	com.imolczek.liferay.lab.petstore.model.Pet
-	
+
+Include-Resource:\
+	@gson-2.8.5.jar

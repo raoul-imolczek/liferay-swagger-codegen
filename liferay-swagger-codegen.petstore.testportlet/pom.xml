@@ -1,9 +1,45 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>com.imolczek.liferay.lab</groupId>
-    <artifactId>liferay-swagger-codegen</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>liferay-swagger-codegen.petstore.testportlet</artifactId>
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.imolczek.liferay.lab</groupId>
+		<artifactId>liferay-swagger-codegen</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>liferay-swagger-codegen.petstore.testportlet</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.service.component.annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.liferay.portal</groupId>
+			<artifactId>com.liferay.portal.kernel</artifactId>
+		</dependency>		
+		<dependency>
+			<groupId>javax.portlet</groupId>
+			<artifactId>portlet-api</artifactId>
+		</dependency>	
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>osgi.cmpn</artifactId>
+		</dependency>	
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>					
+		<dependency>
+			<groupId>com.imolczek.liferay.lab</groupId>
+			<artifactId>liferay-swagger-codegen.petstore.api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>		
+		</dependency>			     	
+		<dependency>
+			<groupId>com.imolczek.liferay.lab</groupId>
+			<artifactId>liferay-swagger-codegen.petstore.model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>		
+		</dependency>		
+	</dependencies>
+
 </project>

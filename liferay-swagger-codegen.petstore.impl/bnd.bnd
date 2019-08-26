@@ -1,0 +1,14 @@
+Import-Package:\
+	javax.annotation; resolution:="optional",\
+	!android.util,\
+	!android.os,\
+	*  
+    
+Include-Resource:\
+	@gson-2.8.5.jar,\
+	@gson-fire-1.8.0.jar,\
+	@okhttp-3.12.0.jar,\
+	@okio-1.15.0.jar,\
+	@retrofit-2.6.0.jar,\
+	@converter-gson-2.3.0.jar,\
+	@converter-scalars-2.3.0.jar
