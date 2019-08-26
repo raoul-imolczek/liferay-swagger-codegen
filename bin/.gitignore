@@ -1,11 +1,3 @@
-liferay-swagger-codegen.*/.classpath
-liferay-swagger-codegen.*/.settings/
-liferay-swagger-codegen.*/.project
-liferay-swagger-codegen.*/target
-
-.classpath
-.settings/
-.project
 target/
 pom.xml.tag
 pom.xml.releaseBackup
