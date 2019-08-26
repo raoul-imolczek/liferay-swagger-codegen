@@ -1,0 +1,109 @@
+package {{package}};
+
+import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.util.concurrent.TimeUnit;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ServiceScope;
+import com.imolczek.liferay.lab.petstore.model.*;
+import com.imolczek.liferay.lab.petstore.service.*;
+import aQute.bnd.annotation.ProviderType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import retrofit2.Response;
+import org.apache.log4j.Logger;
+import java.util.List;
+import java.util.Map;
+import java.io.File;
+
+{{#operations}}
+
+import {{package}}.api.{{classname}};
+
+@Component(
+        immediate = false,
+        service = {{classname}}LocalService.class,
+        scope = ServiceScope.PROTOTYPE
+)
+@ProviderType
+public class {{classname}}LocalServiceImpl implements {{classname}}LocalService {
+
+    protected static final Logger LOG = Logger.getLogger({{classname}}LocalServiceImpl.class);
+    
+    private {{classname}} api;
+    
+    public {{classname}}LocalServiceImpl() {
+
+        ApiClient apiClient = new ApiClient();
+        OkHttpClient.Builder builder = apiClient.getOkBuilder()
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS);
+        
+        api = apiClient.createService({{classname}}.class);
+        
+    }
+
+	{{#operation}}
+	/**
+	 * {{summary}}
+	 * {{notes}}
+	 {{#allParams}}
+	 * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+	 {{/allParams}}
+	 {{#returnType}}
+	 * @return {{returnType}}
+	 {{/returnType}}
+	 * @throws Exception
+	 {{#isDeprecated}}
+	 * @deprecated
+	 {{/isDeprecated}}
+	 {{#externalDocs}}
+	 * {{description}}
+	 * @see <a href="{{url}}">{{summary}} Documentation</a>
+	 {{/externalDocs}}
+	 */
+	{{#isDeprecated}}
+	@Deprecated
+	{{/isDeprecated}}
+	public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws Exception {
+
+        try {
+			{{#allParams}}
+			{{#isFile}}
+            MultipartBody.Part requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("file", file.getName(), RequestBody.create(null, file))
+                    .build().part(0);                  
+			{{/isFile}}
+			{{/allParams}}
+
+            Response<{{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}Void{{/returnType}}> response = api.{{operationId}}({{#allParams}}{{#isFile}}requestBody{{/isFile}}{{^isFile}}{{paramName}}{{/isFile}}{{#hasMore}}, {{/hasMore}}{{/allParams}}).execute();
+
+            if(response.code() >= 500) {
+                LOG.error("Server side error: " + response.code());
+                throw new Exception();
+            } else if(response.code() >= 400) {
+                LOG.error("Client side error: " + response.code());
+                throw new Exception();
+            }            
+            
+            {{#returnType}}return response.body();{{/returnType}}
+            {{^returnType}}return;{{/returnType}}
+            
+            
+        } catch (SocketTimeoutException e) {
+            LOG.error("Socket timeout", e);
+            throw new Exception();
+        } catch (IOException e) {
+            LOG.error("IO Exception", e);
+            throw new Exception();
+        }
+		
+	}
+	{{/operation}}
+
+
+}
+{{/operations}}

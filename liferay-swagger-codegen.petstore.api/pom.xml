@@ -1,9 +1,91 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>com.imolczek.liferay.lab</groupId>
-    <artifactId>liferay-swagger-codegen</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>liferay-swagger-codegen.petstore.api</artifactId>
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.imolczek.liferay.lab</groupId>
+		<artifactId>liferay-swagger-codegen</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>liferay-swagger-codegen.petstore.api</artifactId>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.liferay.portal</groupId>
+			<artifactId>com.liferay.portal.kernel</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>biz.aQute.bnd</groupId>
+			<artifactId>biz.aQute.bnd.annotation</artifactId>
+		</dependency>	
+		<dependency>
+			<groupId>com.imolczek.liferay.lab</groupId>
+			<artifactId>liferay-swagger-codegen.petstore.model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>		
+		</dependency>				
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>io.swagger</groupId>
+				<artifactId>swagger-codegen-maven-plugin</artifactId>
+				<version>2.4.7</version>
+				<executions>
+			        <execution>
+						<id>Generate Liferay Local Service</id>
+			            <goals>
+			                <goal>generate</goal>
+			            </goals>
+			            <configuration>
+			                <inputSpec>${project.baseUri}../liferay-swagger-codegen.petstore.model/src/main/resources/META-INF/petstore.yaml</inputSpec>
+			                <!-- language file, like e.g. JavaJaxRSCodegen shipped with swagger -->
+			                <language>com.imolczek.liferay.lab.codegen.LiferayLocalServiceCodegen</language>
+			                <templateDirectory>src/main/resources/codegen/templates</templateDirectory>
+			
+			                <output>${project.build.directory}/generated-sources/swagger/</output>
+			                <apiPackage>com.imolczek.liferay.lab.petstore.service</apiPackage>
+			                <modelPackage>com.imolczek.liferay.lab.petstore.model</modelPackage>
+			                
+							<generateApis>true</generateApis>
+							<generateApiTests>false</generateApiTests>
+							<generateApiDocumentation>false</generateApiDocumentation>
+							<generateModels>false</generateModels>
+							<generateModelTests>false</generateModelTests>
+							<generateModelDocumentation>false</generateModelDocumentation>
+							<generateSupportingFiles>false</generateSupportingFiles>
+			                
+			            </configuration>
+			        </execution>					
+				</executions>
+				
+			    <dependencies>
+			        <dependency>
+						<groupId>com.imolczek.liferay.lab</groupId>
+						<artifactId>liferay-swagger-codegen.codegen</artifactId>
+						<version>0.0.1-SNAPSHOT</version>
+			        </dependency>
+			    </dependencies>					
+			</plugin>
+		
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${project.build.directory}/generated-sources/swagger/src/main/java</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>	
 </project>

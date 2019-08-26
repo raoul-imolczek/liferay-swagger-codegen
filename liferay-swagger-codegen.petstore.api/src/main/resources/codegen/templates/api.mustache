@@ -1,0 +1,47 @@
+package {{package}};
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Transactional;
+import aQute.bnd.annotation.ProviderType;
+import java.util.List;
+import java.util.Map;
+import java.io.File;
+import com.imolczek.liferay.lab.petstore.model.*;
+
+
+{{#operations}}
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+    PortalException.class, SystemException.class})
+@ProviderType
+public interface {{classname}}LocalService {
+
+	{{#operation}}
+	/**
+	 * {{summary}}
+	 * {{notes}}
+	 {{#allParams}}
+	 * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+	 {{/allParams}}
+	 {{#returnType}}
+	 * @return {{returnType}}
+	 {{/returnType}}
+	 * @throws Exception
+	 {{#isDeprecated}}
+	 * @deprecated
+	 {{/isDeprecated}}
+	 {{#externalDocs}}
+	 * {{description}}
+	 * @see <a href="{{url}}">{{summary}} Documentation</a>
+	 {{/externalDocs}}
+	 */
+	{{#isDeprecated}}
+	@Deprecated
+	{{/isDeprecated}}
+	public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws Exception;
+	{{/operation}}
+
+
+}
+{{/operations}}
