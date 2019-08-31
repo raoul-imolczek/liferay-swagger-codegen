@@ -1,5 +1,10 @@
 Import-Package:\
 	javax.annotation; resolution:="optional",\
+	javax.annotation.*; resolution:="optional",\
+	!org.conscrypt,\
+	!kotlin,\
+	!kotlin.*,\
+	!kotlinx.*,\
 	!android.util,\
 	!android.os,\
 	*  
@@ -11,4 +16,5 @@ Include-Resource:\
 	@okio-1.15.0.jar,\
 	@retrofit-2.6.0.jar,\
 	@converter-gson-2.3.0.jar,\
-	@converter-scalars-2.3.0.jar
+	@converter-scalars-2.3.0.jar,\
+	@org.apache.oltu.oauth2.client-1.0.1.jar
