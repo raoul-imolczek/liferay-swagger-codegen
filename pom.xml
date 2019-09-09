@@ -110,12 +110,12 @@
 	</dependencyManagement>
 
 	<modules>
+		<module>liferay-swagger-codegen.codegen</module>
+		<module>liferay-swagger-codegen.service-commons</module>
 		<module>liferay-swagger-codegen.petstore.model</module>
 		<module>liferay-swagger-codegen.petstore.api</module>
 		<module>liferay-swagger-codegen.petstore.impl</module>
 		<module>liferay-swagger-codegen.petstore.testportlet</module>
-		<module>liferay-swagger-codegen.codegen</module>
-		<module>liferay-swagger-codegen.service-commons</module>
 	</modules>
 	
 	<build>

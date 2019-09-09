@@ -5,8 +5,13 @@ import java.net.SocketTimeoutException;
 import java.util.concurrent.TimeUnit;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
-import com.imolczek.liferay.lab.petstore.model.*;
-import com.imolczek.liferay.lab.petstore.service.*;
+
+import com.imolczek.liferay.lab.swagger.exceptions.ServerSideException;
+import com.imolczek.liferay.lab.swagger.exceptions.ClientSideException;
+import com.imolczek.liferay.lab.swagger.exceptions.CommunicationException;
+
+import {{modelPackage}}.*;
+import {{servicePackage}}.*;
 import aQute.bnd.annotation.ProviderType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -55,7 +60,7 @@ public class {{classname}}LocalServiceImpl implements {{classname}}LocalService 
 	 {{#returnType}}
 	 * @return {{returnType}}
 	 {{/returnType}}
-	 * @throws Exception
+	 * @throws ServerSideException, ClientSideException, CommunicationException
 	 {{#isDeprecated}}
 	 * @deprecated
 	 {{/isDeprecated}}
@@ -67,7 +72,7 @@ public class {{classname}}LocalServiceImpl implements {{classname}}LocalService 
 	{{#isDeprecated}}
 	@Deprecated
 	{{/isDeprecated}}
-	public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws Exception {
+	public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws ServerSideException, ClientSideException, CommunicationException {
 
         try {
 			{{#allParams}}
@@ -83,10 +88,10 @@ public class {{classname}}LocalServiceImpl implements {{classname}}LocalService 
 
             if(response.code() >= 500) {
                 LOG.error("Server side error: " + response.code());
-                throw new Exception();
+                throw new ServerSideException(response.code());
             } else if(response.code() >= 400) {
                 LOG.error("Client side error: " + response.code());
-                throw new Exception();
+                throw new ClientSideException(response.code());
             }            
             
             {{#returnType}}return response.body();{{/returnType}}
@@ -95,10 +100,10 @@ public class {{classname}}LocalServiceImpl implements {{classname}}LocalService 
             
         } catch (SocketTimeoutException e) {
             LOG.error("Socket timeout", e);
-            throw new Exception();
+            throw new CommunicationException("Socket time out");
         } catch (IOException e) {
             LOG.error("IO Exception", e);
-            throw new Exception();
+            throw new CommunicationException("IO Exception");
         }
 		
 	}

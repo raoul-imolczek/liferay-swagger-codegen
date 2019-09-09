@@ -8,7 +8,12 @@ import aQute.bnd.annotation.ProviderType;
 import java.util.List;
 import java.util.Map;
 import java.io.File;
-import com.imolczek.liferay.lab.petstore.model.*;
+
+import com.imolczek.liferay.lab.swagger.exceptions.ServerSideException;
+import com.imolczek.liferay.lab.swagger.exceptions.ClientSideException;
+import com.imolczek.liferay.lab.swagger.exceptions.CommunicationException;
+
+import {{modelPackage}}.*;
 
 
 {{#operations}}
@@ -27,7 +32,7 @@ public interface {{classname}}LocalService {
 	 {{#returnType}}
 	 * @return {{returnType}}
 	 {{/returnType}}
-	 * @throws Exception
+	 * @throws ServerSideException, ClientSideException, CommunicationException
 	 {{#isDeprecated}}
 	 * @deprecated
 	 {{/isDeprecated}}
@@ -39,7 +44,7 @@ public interface {{classname}}LocalService {
 	{{#isDeprecated}}
 	@Deprecated
 	{{/isDeprecated}}
-	public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws Exception;
+	public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws ServerSideException, ClientSideException, CommunicationException;
 	{{/operation}}
 
 

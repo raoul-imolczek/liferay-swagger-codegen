@@ -11,6 +11,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.imolczek.liferay.lab</groupId>
+			<artifactId>liferay-swagger-codegen.service-commons</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>	
+		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.service.component.annotations</artifactId>
 		</dependency>

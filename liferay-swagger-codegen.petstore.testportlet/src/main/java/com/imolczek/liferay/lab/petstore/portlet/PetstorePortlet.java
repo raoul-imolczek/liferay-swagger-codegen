@@ -13,7 +13,11 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
 
+import com.imolczek.liferay.lab.petstore.model.Pet;
 import com.imolczek.liferay.lab.petstore.service.PetApiLocalService;
+import com.imolczek.liferay.lab.swagger.exceptions.ClientSideException;
+import com.imolczek.liferay.lab.swagger.exceptions.CommunicationException;
+import com.imolczek.liferay.lab.swagger.exceptions.ServerSideException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 @Component(
@@ -39,9 +43,19 @@ public class PetstorePortlet extends MVCPortlet {
 
 		String petName;
 		try {
-			petName = petApiLocalServiceFactory.getService().getPetById(1l).getName();
+			PetApiLocalService petLocalService = petApiLocalServiceFactory.getService();
+			
+			petLocalService.updatePetWithForm(2l, "Toto", null);
+			
+			Pet pet = petLocalService.getPetById(2l);
+			petName = pet.getName();
 			renderRequest.setAttribute("petName", petName );
-		} catch (Exception e) {
+			LOG.info("Pet name: " + petName);
+		} catch (ServerSideException e) {
+			LOG.error(e);
+		} catch (ClientSideException e) {
+			LOG.error(e);
+		} catch (CommunicationException e) {
 			LOG.error(e);
 		}
 		
