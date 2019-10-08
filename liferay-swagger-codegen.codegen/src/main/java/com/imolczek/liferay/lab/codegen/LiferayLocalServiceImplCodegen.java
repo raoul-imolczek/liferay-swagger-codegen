@@ -1,6 +1,5 @@
 package com.imolczek.liferay.lab.codegen;
 
-import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenType;

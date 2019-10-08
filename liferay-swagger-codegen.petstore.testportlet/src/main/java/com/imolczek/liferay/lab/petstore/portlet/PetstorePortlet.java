@@ -65,7 +65,7 @@ public class PetstorePortlet extends MVCPortlet {
     private ComponentServiceObjects<PetApiLocalService> petApiLocalServiceFactory;
 
     @Reference(scope = ReferenceScope.PROTOTYPE)
-    public void setCbsBestActionApiLocalServiceFactory(ComponentServiceObjects<PetApiLocalService> petApiLocalServiceFactory) {
+    public void setPetApiLocalServiceFactory(ComponentServiceObjects<PetApiLocalService> petApiLocalServiceFactory) {
         this.petApiLocalServiceFactory = petApiLocalServiceFactory;
     }        
     
